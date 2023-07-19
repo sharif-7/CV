@@ -2,7 +2,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
         <a href="home" class="logo d-flex align-items-center">
-            <img src="admin/assets/img/logo.png" alt="">
+            <img src="adminPanel/assets/img/logo.png" alt="">
             <span class="d-none d-lg-block">Admin Panel</span>
         </a>
     </div><!-- End Logo -->
@@ -28,7 +28,7 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="admin/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                    <img src="adminPanel/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
                     <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
                 </a><!-- End Profile Iamge Icon -->
 
