@@ -12,6 +12,8 @@ return new class extends Migration {
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('name')->nullable();
             $table->text('describe')->nullable();
             $table->string('facebook')->nullable();
@@ -41,6 +43,10 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('abouts');
+        Schema::table('abouts', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+        });
+
     }
 };

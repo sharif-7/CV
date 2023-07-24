@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\About;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AboutController extends Controller
 {
@@ -27,6 +28,7 @@ class AboutController extends Controller
     public function store(Request $request)
     {
 
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'describe' => 'nullable|string|max:255',
@@ -45,17 +47,17 @@ class AboutController extends Controller
             'age' => 'nullable|integer',
             'degree' => 'nullable|string|max:255',
             'email' => 'nullable|string|email|max:255',
-            'freelance' => 'nullable|boolean',
+            'freelance' => 'nullable',
             'description' => 'nullable|string|max:600',
             'skill_name' => 'array', // This will be an array of skill names
             'skill_level' => 'array', // This will be an array of skill levels
             // Add any other validation rules as needed for new fields
         ]);
         // Handle file uploads (hero_picture and profile_picture)
-
         $data['hero_picture'] = $this->storeImage($request->hero_picture, 'images', 'hero');
         $data['profile_picture'] = $this->storeImage($request->profile_picture, 'images', 'profile');
 
+        $data['user_id'] = Auth::id();
 
         // Store the about information in the database
         $about = About::create($data);

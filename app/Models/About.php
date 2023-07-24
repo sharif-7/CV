@@ -10,6 +10,7 @@ class About extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'describe',
         'facebook',
@@ -30,5 +31,10 @@ class About extends Model
         'freelance',
         'description',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }
