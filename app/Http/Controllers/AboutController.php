@@ -19,6 +19,11 @@ class AboutController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        $about = $user->about;
+        if ($about) {
+            return view('admin.editAbout', compact('about'));
+        }
         return view('admin.about');
     }
 
@@ -109,17 +114,59 @@ class AboutController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        //
+        $user = Auth::user();
+        $about = $user->about;
+
+        return view('admin.editAbout', compact('about'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'describe' => 'nullable|string|max:255',
+            'facebook' => 'nullable|string|max:255',
+            'twitter' => 'nullable|string|max:255',
+            'instagram' => 'nullable|string|max:255',
+            'linkedin' => 'nullable|string|max:255',
+            'github' => 'nullable|string|max:255',
+            'hero_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'job_title' => 'nullable|string|max:255',
+            'birthday' => 'nullable|date',
+            'website' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'age' => 'nullable|integer|min:0',
+            'degree' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255',
+            'freelance' => 'nullable|boolean',
+            'description' => 'nullable|string|max:600',
+            'skill_name' => 'array', // This will be an array of skill names
+            'skill_name.*' => 'required|string|max:255',
+            'skill_level' => 'array', // This will be an array of skill levels
+            'skill_level.*' => 'required|integer|min:1|max:100',]);
+
+        // Handle file uploads (hero_picture and profile_picture) similar to the store method
+        // ...
+
+        // Update the user's about information in the database
+        $about = $user->about;
+        $about->update($data);
+
+        // Handle skills (if provided) similar to the store method
+        // ...
+
+        return redirect()->route('about.edit', ['about' => $about->id])->with('success', 'About information updated successfully.');
+
     }
 
     /**

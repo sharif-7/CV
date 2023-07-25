@@ -19,9 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/mycv/{id}', 'App\Http\Controllers\AdminController@show')->name('mycv.show');
+
 Route::post('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
-Route::prefix('admin')->group(function () {
+Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/', 'App\Http\Controllers\AdminController@index')->name('admin.dashboard');
     Route::resource('about', 'App\Http\Controllers\AboutController');
 });
