@@ -15,6 +15,13 @@
                 <span>About</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/resume">
+                <i class="bi bi-card-list"></i>
+                <span>Resume</span>
+            </a>
+        </li>
         <!-- End Dashboard Nav -->
 
     </ul>
