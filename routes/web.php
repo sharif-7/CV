@@ -28,5 +28,6 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('about', 'App\Http\Controllers\AboutController');
     Route::resource('resume', 'App\Http\Controllers\ResumeController');
     Route::resource('portfolio', App\Http\Controllers\PortfolioController::class);
+    Route::resource('category', App\Http\Controllers\CategoryController::class);
 
 });

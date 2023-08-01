@@ -24,11 +24,20 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/category">
+                <i class="bi bi-tag-fill"></i>
+                <span>Category</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link collapsed" href="/admin/portfolio">
                 <i class="bi bi-card-image"></i>
                 <span>Portfolio</span>
             </a>
         </li>
+
+
         <!-- End Dashboard Nav -->
 
     </ul>

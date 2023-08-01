@@ -36,6 +36,28 @@
                         <small class="form-text text-muted">Upload a new image to replace the existing one
                             (Optional).</small>
                     </div>
+
+                    @if (count($categories) > 0)
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select name="category_id" id="category" class="form-control" required>
+                                <option value="" disabled>Select a category</option>
+                                @foreach ($categories as $category)
+                                    <option
+                                        value="{{ $category->id }}" {{ $category->id == $portfolio->category_id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                        </div>
+                    @else
+                        <div class="alert alert-warning">
+                            No categories found. Please <a href="{{ route('category.create') }}">create a category</a>
+                            first.
+                        </div>
+                    @endif
+
                     <div class="mb-3">
                         <img src="{{ $portfolio->image }}" alt="{{ $portfolio->title }}" class="img-fluid img-thumbnail"
                              style="max-height: 200px;">

@@ -12,7 +12,6 @@
     <div class="container">
         <div class="pagetitle">
             <h1>Portfolio</h1>
-
         </div><!-- End Page Title -->
 
         {{-- Error Messages --}}
@@ -48,23 +47,40 @@
                         <div class="card-body">
                             <h5 class="card-title">Portfolio</h5>
                             <!-- Create Portfolio Form -->
-                            <form action="{{ route('portfolio.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" name="title" id="title" class="form-control" required>
+                            @if (count($categories) > 0)
+                                <form action="{{ route('portfolio.store') }}" method="POST"
+                                      enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="title">Title</label>
+                                        <input type="text" name="title" id="title" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" id="description" class="form-control" rows="3"
+                                                  required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="category">Category</label>
+                                        <select name="category_id" id="category" class="form-control" required>
+                                            <option value="" disabled selected>Select a category</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <input type="file" name="image" id="image" class="form-control" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Add Portfolio</button>
+                                </form>
+                            @else
+                                <div class="alert alert-warning">
+                                    No categories found. Please <a href="{{ route('category.create') }}">create a
+                                        category</a> first.
                                 </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea name="description" id="description" class="form-control" rows="3"
-                                              required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="image">Image</label>
-                                    <input type="file" name="image" id="image" class="form-control" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Add Portfolio</button>
-                            </form>
+                            @endif
 
                             <!-- Existing Portfolios -->
                             @if (count($portfolios) > 0)
@@ -77,6 +93,7 @@
                                             <th>#</th>
                                             <th>Title</th>
                                             <th>Description</th>
+                                            <th>Category</th>
                                             <th>Image</th>
                                             <th>Actions</th>
                                         </tr>
@@ -87,6 +104,13 @@
                                                 <td>{{ $index + 1 }}</td>
                                                 <td>{{ $portfolio->title }}</td>
                                                 <td>{{ $portfolio->description }}</td>
+                                                <td>
+                                                    @if ($portfolio->category)
+                                                        {{ $portfolio->category->name }}
+                                                    @else
+                                                        <em>No category</em>
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <img src="{{ $portfolio->image }}" alt="{{ $portfolio->title }}"
                                                          class="img-fluid img-thumbnail" style="max-height: 50px;">
@@ -118,13 +142,11 @@
                                 <p>No portfolios found.</p>
                             @endif
 
-
                         </div>
-
-
                     </div>
 
                 </div>
             </div>
         </section>
+    </div>
 @endsection

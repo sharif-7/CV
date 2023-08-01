@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,10 @@ class PortfolioController extends Controller
     {
         $user = Auth::user();
         $portfolios = $user->portfolios;
+        $categories = Category::all();
 
-        return view('admin.portfolio.index', compact('portfolios'));
+
+        return view('admin.portfolio.index', compact('portfolios', 'categories'));
     }
 
     /**
@@ -37,6 +40,7 @@ class PortfolioController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id', // Ensure the selected category exists in the categories table
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the file types and maximum size as needed
         ]);
         $image = $request->file('image'); // Get the uploaded file
@@ -49,6 +53,9 @@ class PortfolioController extends Controller
             ]);
 
             $user->portfolios()->save($portfolio);
+
+            $portfolio->category()->associate(Category::findOrFail($request->input('category_id')));
+            $portfolio->save();
 
             return redirect()->route('portfolio.index')->with('success', 'Portfolio created successfully.');
         }
@@ -85,8 +92,9 @@ class PortfolioController extends Controller
     public function edit(string $id)
     {
         $portfolio = Portfolio::findOrFail($id);
+        $categories = Category::all();
 
-        return view('admin.portfolio.edit', compact('portfolio'));
+        return view('admin.portfolio.edit', compact('portfolio', 'categories'));
 
     }
 
@@ -105,6 +113,7 @@ class PortfolioController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
+            'category_id' => 'required|exists:categories,id', // Ensure the selected category exists in the categories table
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the file types and maximum size as needed
         ]);
 
@@ -116,6 +125,8 @@ class PortfolioController extends Controller
             $image = $request->file('image');
             $portfolio->image = $this->storeImage($image, 'images', 'portfolio');
         }
+
+        $portfolio->category()->associate(Category::findOrFail($request->input('category_id')));
 
         $portfolio->save();
 

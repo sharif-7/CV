@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -30,14 +30,16 @@ class AdminController extends Controller
     public function show($id)
     {
         // Retrieve the user based on the given name
-        $user = User::findOrFail($id);
+        $user = Auth::user();
         $about = $user->about;
         $resume = $user->resume;
         $educations = $user->educations;
         $experiences = $user->experiences;
+        $categories = $user->categories;
+        $portfolios = $user->portfolios;
         if ($user) {
             // You can pass the user data to the view or perform any other actions here
-            return view('show', compact('about', 'resume', 'educations', 'experiences'));
+            return view('show', compact('about', 'resume', 'educations', 'experiences', 'categories', 'portfolios'));
         } else {
             // Handle the case when the user is not found
             abort(404);
