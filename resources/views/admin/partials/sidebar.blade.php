@@ -22,6 +22,13 @@
                 <span>Resume</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/portfolio">
+                <i class="bi bi-card-image"></i>
+                <span>Portfolio</span>
+            </a>
+        </li>
         <!-- End Dashboard Nav -->
 
     </ul>

@@ -32,10 +32,12 @@ class AdminController extends Controller
         // Retrieve the user based on the given name
         $user = User::findOrFail($id);
         $about = $user->about;
-
+        $resume = $user->resume;
+        $educations = $user->educations;
+        $experiences = $user->experiences;
         if ($user) {
             // You can pass the user data to the view or perform any other actions here
-            return view('show', compact('about'));
+            return view('show', compact('about', 'resume', 'educations', 'experiences'));
         } else {
             // Handle the case when the user is not found
             abort(404);

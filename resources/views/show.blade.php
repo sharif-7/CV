@@ -162,7 +162,56 @@
 @endsection
 
 @section('resume')
-    @include('showPartials.resume')
+    <section id="resume" class="resume">
+        <div class="container">
+
+            <div class="section-title">
+                <h2>Resume</h2>
+
+
+                <div class="row">
+                    <div class="col-lg-6" data-aos="fade-up">
+                        <h3 class="resume-title">Sumary</h3>
+                        <div class="resume-item pb-0">
+                            <h4>{{$about->name}}</h4>
+                            <p><em>{{$resume->summary}}</em></p>
+                            <ul>
+                                <li>{{$resume->address}}</li>
+                                <li>{{$about->phone}}</li>
+                                <li>{{$about->email}}</li>
+                            </ul>
+                        </div>
+
+                        <h3 class="resume-title">Education</h3>
+                        @foreach($educations as $education)
+                            <div class="resume-item">
+                                <h4>{{ $education->title }}</h4>
+                                <h5>{{ $education->year_of_graduate }}</h5>
+                                <p><em>{{ $education->university }}</em></p>
+                                <p>{{ $education->description }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="resume-title">Professional Experience</h3>
+
+                        @foreach($experiences as $experience)
+                            <div class="resume-item">
+                                <h4>{{$experience->job_title}}</h4>
+                                <h5>{{$experience->start_year.' - '.$experience->end_year}}</h5>
+                                <p><em>{{$experience->company}}</em></p>
+                                <ul>
+                                    {{$experience->description}}
+                                </ul>
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
 @endsection
 
 @section('portfolio')

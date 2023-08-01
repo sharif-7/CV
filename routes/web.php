@@ -27,4 +27,6 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/', 'App\Http\Controllers\AdminController@index')->name('admin.dashboard');
     Route::resource('about', 'App\Http\Controllers\AboutController');
     Route::resource('resume', 'App\Http\Controllers\ResumeController');
+    Route::resource('portfolio', App\Http\Controllers\PortfolioController::class);
+
 });
